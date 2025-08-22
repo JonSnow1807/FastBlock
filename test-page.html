@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastBlock Test Page</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 20px; }
+        .blocked { color: green; font-weight: bold; }
+        .not-blocked { color: red; font-weight: bold; }
+        h1 { color: #333; }
+        .test-item { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 FastBlock Ad Blocking Test</h1>
+    
+    <h2>Testing Known Ad Servers:</h2>
+    <div id="test-results"></div>
+    
+    <h2>Console Output:</h2>
+    <div id="console-output" style="background: black; color: green; padding: 10px; font-family: monospace;"></div>
+    
+    <script>
+        const testUrls = [
+            { name: 'DoubleClick', url: 'https://doubleclick.net/test.js' },
+            { name: 'Google Tag Manager', url: 'https://googletagmanager.com/gtm.js' },
+            { name: 'Google Analytics', url: 'https://google-analytics.com/analytics.js' },
+            { name: 'Google AdSense', url: 'https://googlesyndication.com/pagead/js/adsbygoogle.js' },
+            { name: 'Amazon Ads', url: 'https://amazon-adsystem.com/aax2/apstag.js' }
+        ];
+        
+        const results = document.getElementById('test-results');
+        const consoleOut = document.getElementById('console-output');
+        
+        testUrls.forEach(test => {
+            const div = document.createElement('div');
+            div.className = 'test-item';
+            
+            // Create an image request to test blocking
+            const img = new Image();
+            img.onerror = () => {
+                div.innerHTML = `✅ <span class="blocked">${test.name} - BLOCKED</span> (${test.url})`;
+                consoleOut.innerHTML += `✅ Blocked: ${test.name}<br>`;
+            };
+            img.onload = () => {
+                div.innerHTML = `❌ <span class="not-blocked">${test.name} - NOT BLOCKED</span> (${test.url})`;
+                consoleOut.innerHTML += `❌ Not blocked: ${test.name}<br>`;
+            };
+            img.src = test.url;
+            
+            results.appendChild(div);
+        });
+        
+        // Test with script tags
+        const script = document.createElement('script');
+        script.src = 'https://doubleclick.net/tag/js/gpt.js';
+        script.onerror = () => consoleOut.innerHTML += '✅ Script block test: DoubleClick script blocked<br>';
+        script.onload = () => consoleOut.innerHTML += '❌ Script block test: DoubleClick script loaded<br>';
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastBlock Real Test</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 20px; }
+        .ad-container { border: 2px dashed red; padding: 20px; margin: 20px 0; min-height: 100px; }
+        .blocked { background: #d4edda; border-color: green; }
+        .loaded { background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>🧪 FastBlock Real Ad Test</h1>
+    
+    <h2>Test 1: Google Ads Script</h2>
+    <div id="google-ads" class="ad-container">
+        <p>If this box remains empty/green = Ad Blocked ✅</p>
+        <p>If you see ads or red background = Not Blocked ❌</p>
+    </div>
+    
+    <h2>Test 2: DoubleClick</h2>
+    <div id="doubleclick" class="ad-container">
+        <p>Testing DoubleClick...</p>
+    </div>
+
+    <h2>Test 3: Real iframe Ad</h2>
+    <iframe src="https://rcm-na.amazon-adsystem.com/e/cm?t=test&o=1" width="728" height="90" style="border: 2px solid blue;"></iframe>
+    
+    <script>
+        // Test 1: Try to load Google Ads
+        var script1 = document.createElement('script');
+        script1.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        script1.onload = function() {
+            document.getElementById('google-ads').innerHTML = '❌ Google Ads LOADED - Not Blocked!';
+            document.getElementById('google-ads').className = 'ad-container loaded';
+        };
+        script1.onerror = function() {
+            document.getElementById('google-ads').innerHTML = '✅ Google Ads BLOCKED!';
+            document.getElementById('google-ads').className = 'ad-container blocked';
+        };
+        document.head.appendChild(script1);
+        
+        // Test 2: Try to load DoubleClick
+        var script2 = document.createElement('script');
+        script2.src = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js';
+        script2.onload = function() {
+            document.getElementById('doubleclick').innerHTML = '❌ DoubleClick LOADED - Not Blocked!';
+            document.getElementById('doubleclick').className = 'ad-container loaded';
+        };
+        script2.onerror = function() {
+            document.getElementById('doubleclick').innerHTML = '✅ DoubleClick BLOCKED!';
+            document.getElementById('doubleclick').className = 'ad-container blocked';
+        };
+        document.head.appendChild(script2);
+    </script>
+</body>
+</html>
