@@ -1,0 +1,10 @@
+{
+  "extension_name": {
+    "message": "FastBlock",
+    "description": "Name of the extension"
+  },
+  "extension_description": {
+    "message": "Ultra-fast ad blocking with 72% less memory usage",
+    "description": "Description of the extension"
+  }
+}
